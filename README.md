@@ -39,11 +39,13 @@ This program will display a stacked line chart of net pay and tax amount for a r
 
 This project uses the following libraries and assets.
 
-| Library / Asset                                                                                          | License Type                     | Usage   |
+| Library / Asset| License Type                     | Usage   |
 |:---------------------------------------------------------------------------------------------------------|:---------------------------------| :- |
-| [matplotlib](https://matplotlib.org)                                                                     | PSF (Python Software Foundation) | chart visualization |
-| [Tkinter](https://tkdocs.com/)                                                    | CC BY-NC-SA 4.0                  | gui toolkit
+| [matplotlib](https://matplotlib.org) | PSF (Python Software Foundation) | chart visualization |
+| [Tkinter](https://tkdocs.com/) | CC BY-NC-SA 4.0                  | gui toolkit |
 ---
 
 ## Tutorials, Documentation, and Code Referenced
-- [Title](url) by Author
+- [Publication 15-T](https://www.irs.gov/pub/irs-pdf/p15t.pdf) for 2026 Percentage Method Tables BIWEEKLY Payroll Period
+- [Form W-4](https://www.irs.gov/pub/irs-pdf/fw4.pdf) for 2026 Standard Deductions
+- [California Withholding Schedules for 2026](https://edd.ca.gov/siteassets/files/pdf_pub_ctr/26methb.pdf) for Bi-weekly Payroll Period Tax Rate Tables
