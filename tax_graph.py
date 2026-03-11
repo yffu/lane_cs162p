@@ -1,4 +1,7 @@
 import json
+import tkinter as tk
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 class TaxGraph:
     
@@ -6,15 +9,36 @@ class TaxGraph:
 
         self.__tax_config = None
         self.tax_config = 'tax_config_fed.json'
-        #print(self.tax_config)
-        print(self.get_coordinates_by_fs('married_joint'))
+        root = tk.Tk()
+        root.title('Tax Graph')
+        root.geometry('960x540')
+        row_frame = tk.Frame(root)
+        row_frame.pack()
+        fig = Figure()
+
+        self.axes = fig.add_subplot(111)
+        self.canvas = FigureCanvasTkAgg(fig, master=root)
+        self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        self.update_plot('married_joint')
+        root.mainloop()
+
+    def update_plot(self, filing_status):
+        tax_coord = self.get_coordinates_by_fs(filing_status)
+
+        self.axes.clear()
+        self.axes.set_title('Tax and Net Pay vs. Biweekly Income for Married Filing')
+        self.axes.stackplot(*tax_coord, labels = ['Net Pay', 'Federal Tax'], colors = ['#002A84', '#F2A900'])
+        self.axes.legend(loc='upper left')
+        self.axes.set_xlabel('Biweekly Adjusted Gross Income')
+        self.canvas.draw()
 
     def get_coordinates_by_fs(self, filing_status):
         tax_coord = list()
         adjusted_gross_hi = int(self.tax_config['withholding_schedules'][filing_status][-1][0] * 1.2)
         x_range = range(0, adjusted_gross_hi, 50)
         y_tax_fed = [self.calc_tax(filing_status, x, self.tax_config) for x in x_range]
-        tax_coord = [x_range, y_tax_fed]
+        y_net_pay = [x_grs - y_tax for x_grs, y_tax in zip(x_range, y_tax_fed)]
+        tax_coord = [x_range, y_net_pay, y_tax_fed]
         return tax_coord
 
     @property
