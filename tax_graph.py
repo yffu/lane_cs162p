@@ -26,7 +26,7 @@ class TaxGraph:
         tax_coord = self.get_coordinates_by_fs(filing_status)
 
         self.axes.clear()
-        self.axes.set_title('Tax and Net Pay vs. Biweekly Income for Married Filing')
+        self.axes.set_title('Tax and Net Pay vs. Biweekly Income for Married Filing Status')
         self.axes.stackplot(*tax_coord, labels = ['Net Pay', 'Federal Tax'], colors = ['#002A84', '#F2A900'])
         self.axes.legend(loc='upper left')
         self.axes.set_xlabel('Biweekly Adjusted Gross Income')
@@ -50,6 +50,22 @@ class TaxGraph:
         if self.tax_config is None:
             with open(fn_config) as f:
                 self.__tax_config = json.load(f)
+
+    @property
+    def axes(self):
+        return self.__axes
+
+    @axes.setter
+    def axes(self, a):
+        self.__axes = a
+
+    @property
+    def canvas(self):
+        return self.__canvas
+
+    @canvas.setter
+    def canvas(self, c):
+        self.__canvas = c
 
     @classmethod
     def calc_tax(cls, filing_status, adjusted_gross, tax_config):
