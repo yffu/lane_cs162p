@@ -77,8 +77,8 @@ class TaxGraph:
         return self.__tax_pts_store
 
     @tax_pts_store.setter
-    def tax_pts_store(self, tp):
-        self.__tax_pts_store = tp
+    def tax_pts_store(self, tps):
+        self.__tax_pts_store = tps
         
     ''' TypeError: 'method' object is not subscriptable
     @property
@@ -134,5 +134,5 @@ class TaxGraphSte(TaxGraph):
         
 
 if __name__ == '__main__':
-    #tax_graph = TaxGraph()
+    # tax_graph = TaxGraph()
     tax_graph = TaxGraphSte()
