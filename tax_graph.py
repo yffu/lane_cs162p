@@ -18,7 +18,7 @@ class TaxGraph:
 
         label = tk.Label(row_frame, text = 'Filing Status: ')
         label.pack(side = 'left', anchor = 'center')
-        filing_statuses = TaxGraph._tax_config['filing_statuses']
+        filing_statuses = self.tax_config['filing_statuses']
         filing_stat = tk.StringVar(root)
         filing_stat.set(filing_statuses[0])
         dropdown = tk.OptionMenu(row_frame, filing_stat, *filing_statuses, command=self.update_plot)
@@ -26,6 +26,8 @@ class TaxGraph:
 
         fig = Figure()
         self.axes = fig.add_subplot(111)
+        self.axes.set_title('Tax and Net Pay vs. Biweekly Income')
+        self.axes.set_xlabel('Biweekly Adjusted Gross Income')
         self.canvas = FigureCanvasTkAgg(fig, master=root)
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
         self.update_plot(filing_stat.get())
@@ -35,10 +37,8 @@ class TaxGraph:
         tax_coord = self.get_coordinates_by_fs(filing_status)
 
         self.axes.clear()
-        self.axes.set_title('Tax and Net Pay vs. Biweekly Income for Married Filing Status')
         self.axes.stackplot(*tax_coord, labels = ['Net Pay', 'Federal Tax'], colors = ['#002A84', '#F2A900'], edgecolor='white')
         self.axes.legend(loc='upper left')
-        self.axes.set_xlabel('Biweekly Adjusted Gross Income')
         self.canvas.draw()
 
     def get_coordinates_by_fs(self, filing_status):
@@ -66,7 +66,13 @@ class TaxGraph:
     @canvas.setter
     def canvas(self, c):
         self.__canvas = c
-
+        
+    ''' TypeError: 'method' object is not subscriptable
+    @property
+    def tax_config(self):
+        return TaxGraph._tax_config
+    '''
+    
     @classmethod
     def tax_config(cls, fn_config):
         if cls._tax_config is None:
